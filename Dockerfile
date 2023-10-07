@@ -8,11 +8,9 @@ LABEL maintainer="jfloff@inesc-id.pt"
 #    https://github.com/AnthoDingo/docker-lineageos/blob/autobuild/Dockerfile
 #
 
-# default user
-ENV USER=lineageos
 ENV \
     # base dir
-    BASE_DIR=/home/$USER \
+    BASE_DIR=/home/lineageos \
     # device configuration dir
     DEVICE_CONFIGS_DIR=/home/device-config
 
@@ -79,14 +77,10 @@ RUN set -ex ;\
 
 # run config in a seperate layer so we cache it
 RUN set -ex ;\
-    # User setup
-    # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-    groupadd -r lineageos && useradd -r -g lineageos lineageos && usermod -u 1000 lineageos ;\
     # allow non-root user to remount fs
     # adding ALL permissions so they can do other stuff in the future, like sudo vim
     curl -L -O https://dl.google.com/android/repository/platform-tools-latest-linux.zip ;\
     unzip platform-tools-latest-linux.zip -d /usr/bin ;\
-    echo "lineageos ALL=NOPASSWD: ALL" >> /etc/sudoers ;\
     # Android Setup
     # create paths: https://wiki.lineageos.org/devices/klte/build#create-the-directories
     curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/bin/repo ;\
@@ -105,10 +99,13 @@ COPY default.env init.sh /etc/profile.d/
 COPY lineageos /bin
 # copy dir with several PRed device configurations
 COPY device-config $DEVICE_CONFIGS_DIR
+# copy entrypoint wrapper script so the permissions on the host system are reset at the end
+COPY entrypoint_wrapper.sh /entrypoint_wrapper.sh
 
 # set volume and user home folder
 RUN mkdir -p "$BASE_DIR" && chown "$USER:$USER" "$BASE_DIR"
 USER $USER
 WORKDIR $BASE_DIR
 
+ENTRYPOINT ["/entrypoint_wrapper.sh"]
 CMD /bin/bash
