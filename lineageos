@@ -83,6 +83,7 @@ function reload_bashrc {
 }
 
 function config_git {
+    git lfs install
     if [[ ! -z $GIT_USER_NAME ]]; then
         git config --global user.name "$GIT_USER_NAME";
     fi
