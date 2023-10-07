@@ -70,25 +70,21 @@ RUN set -ex ;\
           # we add these so we have a non-root user
           fakeroot \
           sudo \
-          # needed for downloading the platform-tools and the repo binary
+          # needed for curl
           ca-certificates \
           ;\
     rm -rf /var/lib/apt/lists/*
 
 # run config in a seperate layer so we cache it
 RUN set -ex ;\
-    # allow non-root user to remount fs
-    # adding ALL permissions so they can do other stuff in the future, like sudo vim
+    # download and install platform-tools
     curl -L -O https://dl.google.com/android/repository/platform-tools-latest-linux.zip ;\
     unzip platform-tools-latest-linux.zip -d /usr/bin ;\
-    # Android Setup
-    # create paths: https://wiki.lineageos.org/devices/klte/build#create-the-directories
+    # download and install repo
     curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/bin/repo ;\
     chmod a+x /usr/bin/repo ;\
     ln -s /usr/bin/python3 /usr/bin/python && \
     # config git coloring
-    # check this link for things repo check:
-    # https://gerrit.googlesource.com/git-repo/+/master/subcmds/init.py#328
     git config --global color.ui true ;\
     # source init when any bash is called (which includes the lineageos script)
     echo "source /etc/profile.d/init.sh" >> /etc/bash.bashrc
