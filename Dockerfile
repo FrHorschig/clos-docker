@@ -1,4 +1,4 @@
-FROM eclipse-temurin:8-jammy
+FROM ubuntu:22.04
 LABEL maintainer="jfloff@inesc-id.pt"
 
 ###################
@@ -18,11 +18,6 @@ ENV \
 # install packages
 RUN set -ex ;\
     apt-get update && apt-get install -y --no-install-recommends \
-          # install sdk
-          # https://wiki.lineageos.org/devices/klte/build#install-the-build-packages
-          android-sdk-platform-tools-common \
-          android-tools-adb \
-          android-tools-fastboot \
           # install packages
           # https://wiki.lineageos.org/devices/klte/build#install-the-build-packages
           bc \
@@ -75,6 +70,8 @@ RUN set -ex ;\
           # we add these so we have a non-root user
           fakeroot \
           sudo \
+          # needed for downloading the platform-tools and the repo binary
+          ca-certificates \
           ;\
     rm -rf /var/lib/apt/lists/*
 
@@ -85,6 +82,8 @@ RUN set -ex ;\
     groupadd -r lineageos && useradd -r -g lineageos lineageos && usermod -u 1000 lineageos ;\
     # allow non-root user to remount fs
     # adding ALL permissions so they can do other stuff in the future, like sudo vim
+    curl -L -O https://dl.google.com/android/repository/platform-tools-latest-linux.zip ;\
+    unzip platform-tools-latest-linux.zip -d /usr/bin ;\
     echo "lineageos ALL=NOPASSWD: ALL" >> /etc/sudoers ;\
     # Android Setup
     # create paths: https://wiki.lineageos.org/devices/klte/build#create-the-directories
