@@ -1,3 +1,4 @@
+ # TODO use smaller base image
 FROM ubuntu:22.04
 LABEL maintainer="jfloff@inesc-id.pt"
 
@@ -29,6 +30,7 @@ RUN set -ex ;\
           g++-multilib \
           gcc-multilib \
           git \
+          git-lfs \
           gnupg \
           gperf \
           imagemagick \
