@@ -4,8 +4,6 @@
 # References:
 #   - Lineage KLTE build instructions:
 #     https://wiki.lineageos.org/devices/klte/build
-#   - User setup for building:
-#     http://android-rebuilds.beuc.net/SDK_6.0.0/
 #   - Parameter expansion:
 #     http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html (2.6.2)
 
