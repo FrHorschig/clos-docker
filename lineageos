@@ -114,7 +114,7 @@ function init {
     config_git;
 
     echo "[INFO] Initializing repository."
-    # forces yes to the anoying color output prompt
+    # forces yes to the annoying color output prompt
     yes | repo init -u $LINEAGEOS_REPO -b $LINEAGEOS_BRANCH
 
     # Update tree with the local manifest (if provided)
