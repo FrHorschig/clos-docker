@@ -1,11 +1,6 @@
 # clos-docker
 (CustomLineageOS-docker)
 
-[![Docker Stars](https://img.shields.io/docker/stars/jfloff/lineageos.svg)][hub]
-[![Docker Pulls](https://img.shields.io/docker/pulls/jfloff/lineageos.svg)][hub]
-
-[hub]: https://hub.docker.com/r/jfloff/lineageos/
-
 Docker container for building [LineageOS](https://lineageos.org/) (formerly known as CyanogenMod).
 
 <!-- MDTOC maxdepth:6 firsth1:0 numbering:0 flatten:0 bullets:1 updateOnSave:1 -->
