@@ -1,4 +1,5 @@
-# docker-lineageos
+# clos-docker
+(CustomLineageOS-docker)
 
 [![Docker Stars](https://img.shields.io/docker/stars/jfloff/lineageos.svg)][hub]
 [![Docker Pulls](https://img.shields.io/docker/pulls/jfloff/lineageos.svg)][hub]
